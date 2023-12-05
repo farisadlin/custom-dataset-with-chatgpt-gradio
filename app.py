@@ -42,29 +42,32 @@ def chatbot(input_text):
     return response.response
 
 # Update the Gradio Interface instantiation
-iface = gr.Interface(
-    fn=chatbot,
-    inputs=gr.components.Textbox(lines=5, label="Enter your question here"),  # Updated component import
-    outputs="text",
-    title="Custom-trained AI Chatbot"
-)
+# iface = gr.Interface(
+#     fn=chatbot,
+#     inputs=gr.components.Textbox(lines=5, label="Enter your question here"),  # Updated component import
+#     outputs="text",
+#     title="Custom-trained AI Chatbot"
+# )
 
 #Constructing indexes based on the documents in traininData folder
 #This can be skipped if you have already trained your app and need to re-run it
 index = construct_index("trainingData")
 
 #launching the web UI using gradio
-iface.launch(share=True)
+# iface.launch(share=True)
 
 # Flask route for the chatbot
 @app.route('/chat', methods=['POST'])
 def chat_endpoint():
     input_text = request.json.get('text')
+    print(f"Received input: {input_text}")  # Console logging with print
     if not input_text:
         return jsonify({'error': 'No text provided'}), 400
 
     response = chatbot(input_text)
+    print(f"Response: {response}")  # Console logging the response
     return jsonify({'response': response})
+
 
 # Main function to run the app
 if __name__ == '__main__':
