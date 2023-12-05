@@ -11,13 +11,11 @@ load_dotenv()  # Load variables from .env
 app = Flask(__name__)
 CORS(app)
 
-os.environ.get('OPENAI_API_KEY')
-
 def construct_index(directory_path):
     # set number of output tokens
     num_outputs = 256
 
-    _llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.5, model_name="gpt-3.5-turbo", max_tokens=num_outputs))
+    _llm_predictor = LLMPredictor(llm=OpenAI(api_key=os.environ.get('OPENAI_API_KEY'), temperature=0.5, model_name="gpt-3.5-turbo", max_tokens=num_outputs))
 
     service_context = ServiceContext.from_defaults(llm_predictor=_llm_predictor)
 
