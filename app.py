@@ -60,12 +60,10 @@ index = construct_index("trainingData")
 @app.route('/chat', methods=['POST'])
 def chat_endpoint():
     input_text = request.json.get('text')
-    print(f"Received input: {input_text}")  # Console logging with print
     if not input_text:
         return jsonify({'error': 'No text provided'}), 400
 
     response = chatbot(input_text)
-    print(f"Response: {response}")  # Console logging the response
     return jsonify({'response': response})
 
 
